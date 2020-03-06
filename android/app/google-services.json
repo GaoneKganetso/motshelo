@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "562282966479",
+    "firebase_url": "https://matimela-d3576.firebaseio.com",
+    "project_id": "matimela-d3576",
+    "storage_bucket": "matimela-d3576.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562282966479:android:344fc6e566d13109ad36ba",
+        "android_client_info": {
+          "package_name": "bw.co.pixel5tech.matimela"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "562282966479-sdigr5hf7g7k95rdgl79h9usp0s8dq24.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB45m7HUnJrSbA5uRoikQf4yeru0m8CQDs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "562282966479-sdigr5hf7g7k95rdgl79h9usp0s8dq24.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
