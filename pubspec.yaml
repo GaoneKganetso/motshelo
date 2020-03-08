@@ -24,6 +24,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   flutter_screenutil: ^0.5.2
+  firebase_auth: any
+  cloud_firestore: any
+  provider:
+  flutter_spinkit: "^4.1.2"
+  font_awesome_flutter: ^8.7.0
+  flutter_styled_toast:
 
 dev_dependencies:
   flutter_test:
