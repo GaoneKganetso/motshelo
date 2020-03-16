@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:matimela/src/helpers/page_view_card.dart';
-import 'package:matimela/src/helpers/square_button.dart';
-import 'package:matimela/src/helpers/tracking_lines.dart';
+import 'package:matimela/src/mixins/page_view_card.dart';
+import 'package:matimela/src/mixins/square_button.dart';
+import 'package:matimela/src/mixins/tracking_lines.dart';
 import 'package:matimela/src/screens/user/profile.dart';
+import 'package:matimela/src/screens/user/regular/search.dart';
 import 'package:matimela/src/services/auth.dart';
 
 class HomePage extends StatefulWidget {
@@ -96,20 +97,36 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         SquareButton(
-                          icon: Icon(FontAwesomeIcons.folderPlus),
+                          icon: Icon(FontAwesomeIcons.search),
                           label: 'Cases',
+                          action: () {
+                            Navigator.push(context,
+                                new MaterialPageRoute(builder: (context) => SearchAnimal()));
+                          },
                         ),
                         SquareButton(
                           icon: Icon(FontAwesomeIcons.horse),
                           label: 'My Kraal',
+                          action: () {
+                            Navigator.push(context,
+                                new MaterialPageRoute(builder: (context) => SearchAnimal()));
+                          },
                         ),
                         SquareButton(
                           icon: Icon(FontAwesomeIcons.userFriends),
                           label: 'Farmers',
+                          action: () {
+                            Navigator.push(context,
+                                new MaterialPageRoute(builder: (context) => SearchAnimal()));
+                          },
                         ),
                         SquareButton(
                           icon: Icon(FontAwesomeIcons.solidComments),
                           label: 'Message',
+                          action: () {
+                            Navigator.push(context,
+                                new MaterialPageRoute(builder: (context) => SearchAnimal()));
+                          },
                         ),
                       ],
                     ),
@@ -151,11 +168,11 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Positioned(
-            bottom: 120.0,
+            bottom: 80.0,
             left: 0.0,
             right: 0.0,
             child: Container(
-              height: MediaQuery.of(context).size.height / 1.8 - 90.0,
+              height: MediaQuery.of(context).size.height / 1.6 - 90.0,
               child: Stack(
                 children: <Widget>[
                   Padding(
@@ -190,7 +207,7 @@ class _HomePageState extends State<HomePage> {
             left: 0.0,
             right: 0.0,
             child: Container(
-              height: 120.0,
+              height: 90.0,
               color: Color(0xFFB42827),
               child: Stack(
                 children: <Widget>[
@@ -305,10 +322,10 @@ class _HomePageState extends State<HomePage> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 46.0, bottom: 46.0),
                             child: UserInfo(
-                                picture:
-                                    'https://shopolo.hu/wp-content/uploads/2019/04/profile1-%E2%80%93-kopija.jpeg',
-                                name: 'Moffat More',
-                                id: '0023-more'),
+                                picture: 'assets/image/profile/user-default.png',
+                                name: 'Tiro',
+                                id: '0023-mor'
+                                    'e'),
                           ),
                         ),
                       ],

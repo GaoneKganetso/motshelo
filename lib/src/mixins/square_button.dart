@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 class SquareButton extends StatelessWidget {
   final String label;
   final Icon icon;
+  final Function action;
 
-  SquareButton({
-    @required this.label,
-    @required this.icon,
-  })  : assert(label != null),
+  SquareButton({@required this.label, @required this.icon, @required this.action})
+      : assert(label != null),
         assert(icon != null);
 
   @override
@@ -22,7 +21,7 @@ class SquareButton extends StatelessWidget {
           child: CupertinoButton(
             padding: EdgeInsets.zero,
             borderRadius: BorderRadius.circular(20.0),
-            onPressed: () {},
+            onPressed: action,
             color: Color(0xFFB42827),
             child: Icon(
               icon.icon,

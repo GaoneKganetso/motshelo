@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:matimela/src/helpers/wrapper.dart';
+import 'package:matimela/src/mixins/wrapper.dart';
 import 'package:matimela/src/models/user.dart';
 import 'package:matimela/src/services/auth.dart';
 import 'package:provider/provider.dart';

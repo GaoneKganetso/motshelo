@@ -29,7 +29,7 @@ class _AuthenticateState extends State<Authenticate> with TickerProviderStateMix
       size: 50.0,
       controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
     );
-    return new Scaffold(
+    return Scaffold(
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: true,
         body: Stack(
@@ -158,7 +158,7 @@ class _AuthenticateState extends State<Authenticate> with TickerProviderStateMix
                                         children: <Widget>[
                                           InkWell(
                                             child: Container(
-                                                width: MediaQuery.of(context).size.width / 2.5,
+                                                width: MediaQuery.of(context).size.width / 3,
                                                 height: ScreenUtil.getInstance().setHeight(50),
                                                 margin: EdgeInsets.all(7),
                                                 decoration: BoxDecoration(
@@ -173,7 +173,7 @@ class _AuthenticateState extends State<Authenticate> with TickerProviderStateMix
                                                 ),
                                                 child: FlatButton(
                                                   color: Colors.transparent,
-                                                  child: Text('Guest Login',
+                                                  child: Text('Guest',
                                                       style: TextStyle(
                                                           color: Colors.blue,
                                                           fontSize: 16.0,

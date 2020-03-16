@@ -227,10 +227,10 @@ class _RegisterState extends State<Register> with TickerProviderStateMixin {
                                                         loading = false;
                                                       });
                                                     }
-//                                                    setState(() {
-//                                                      loading = false;
-//                                                    });
-//                                                    Navigator.pop(context);
+                                                    setState(() {
+                                                      loading = false;
+                                                    });
+                                                    Navigator.pop(context);
                                                   }
                                                 },
                                                 child: Center(
