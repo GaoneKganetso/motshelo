@@ -51,11 +51,10 @@ class _SearchAnimalState extends State<SearchAnimal> {
               ? StreamBuilder(
                   stream: _reportService.getAllCases(),
                   builder: (context, snapshot) {
-                    print(snapshot.data);
                     final int casesLength = snapshot.data.documents.length;
                     List<AnimalCase> cases = new List<AnimalCase>();
-                    for(int i = 0; i < casesLength; i++){
-                      final DocumentSnapshot _case= snapshot.data.documents[i];
+                    for (int i = 0; i < casesLength; i++) {
+                      final DocumentSnapshot _case = snapshot.data.documents[i];
                       cases.add(new AnimalCase(brand: _case['brand'], color: _case['color']));
                     }
                     print(casesLength);
@@ -147,8 +146,18 @@ class _SearchAnimalState extends State<SearchAnimal> {
   }
 
   Future<List<AnimalCase>> _getALlPosts(String text) async {
-    await Future.delayed(Duration(seconds: text.length == 4 ? 10 : 1));
-    return [];
+    print(text);
+    List<AnimalCase> cases = new List<AnimalCase>();
+    _reportService.getAllCases().listen((QuerySnapshot snapshot) {
+      List<DocumentSnapshot> docs = snapshot.documents;
+      docs.forEach((doc) {
+        print(doc.data['brand']);
+        if (doc.data['brand'] == text) {
+          cases.add(AnimalCase(brand: doc.data['brand'], color: doc.data['color']));
+        }
+      });
+    });
+    return cases;
   }
 
   void showModalDialog() {
