@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/scaled_tile.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:matimela/src/models/case.dart';
 import 'package:matimela/src/screens/user/regular/report_matimela.dart';
@@ -58,67 +59,77 @@ class _SearchAnimalState extends State<SearchAnimal> {
                       cases.add(new AnimalCase(brand: _case['brand'], color: _case['color']));
                     }
                     print(cases.toString());
-                    return SearchBar<AnimalCase>(
-                      searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
-                      headerPadding: EdgeInsets.symmetric(horizontal: 10),
-                      listPadding: EdgeInsets.symmetric(horizontal: 10),
-                      onSearch: _getALlPosts,
-                      searchBarController: _searchBarController,
-                      placeHolder: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          "List of Matimela Cases",
-                          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+                    if (snapshot.hasData)
+                      return SearchBar<AnimalCase>(
+                        searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
+                        headerPadding: EdgeInsets.symmetric(horizontal: 10),
+                        listPadding: EdgeInsets.symmetric(horizontal: 10),
+                        onSearch: _getALlPosts,
+                        searchBarController: _searchBarController,
+                        placeHolder: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            "List of Matimela Cases",
+                            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+                          ),
+                        ),
+                        cancellationText: Text("Cancel"),
+                        emptyWidget: Text("empty"),
+                        indexedScaledTileBuilder: (int index) =>
+                            ScaledTile.count(1, index.isEven ? 2 : 1),
+                        header: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            RaisedButton(
+                              child: Text("sort"),
+                              onPressed: () {
+                                _searchBarController.sortList((AnimalCase a, AnimalCase b) {
+                                  return a.brand.compareTo(b.brand);
+                                });
+                              },
+                            ),
+                            RaisedButton(
+                              child: Text("Desort"),
+                              onPressed: () {
+                                _searchBarController.removeSort();
+                              },
+                            ),
+                            RaisedButton(
+                              child: Text("Replay"),
+                              onPressed: () {
+                                isReplay = !isReplay;
+                                _searchBarController.replayLastSearch();
+                              },
+                            ),
+                          ],
+                        ),
+                        mainAxisSpacing: 20,
+                        crossAxisSpacing: 5,
+                        crossAxisCount: 1,
+                        suggestions: cases,
+                        onItemFound: (AnimalCase post, int index) {
+                          return Container(
+                            color: Colors.lightBlue,
+                            child: ListTile(
+                              title: Text(post.brand),
+                              isThreeLine: false,
+                              subtitle: Text(post.description),
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          );
+                        },
+                      );
+
+                    return Container(
+                      child: Center(
+                        child: CupertinoActivityIndicator(
+                          animating: true,
+                          radius: 10,
                         ),
                       ),
-                      cancellationText: Text("Cancel"),
-                      emptyWidget: Text("empty"),
-                      indexedScaledTileBuilder: (int index) =>
-                          ScaledTile.count(1, index.isEven ? 2 : 1),
-                      header: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          RaisedButton(
-                            child: Text("sort"),
-                            onPressed: () {
-                              _searchBarController.sortList((AnimalCase a, AnimalCase b) {
-                                return a.brand.compareTo(b.brand);
-                              });
-                            },
-                          ),
-                          RaisedButton(
-                            child: Text("Desort"),
-                            onPressed: () {
-                              _searchBarController.removeSort();
-                            },
-                          ),
-                          RaisedButton(
-                            child: Text("Replay"),
-                            onPressed: () {
-                              isReplay = !isReplay;
-                              _searchBarController.replayLastSearch();
-                            },
-                          ),
-                        ],
-                      ),
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 5,
-                      crossAxisCount: 1,
-                      suggestions: cases,
-                      onItemFound: (AnimalCase post, int index) {
-                        return Container(
-                          color: Colors.lightBlue,
-                          child: ListTile(
-                            title: Text(post.brand),
-                            isThreeLine: false,
-                            subtitle: Text(post.description),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        );
-                      },
                     );
                   })
               : getPosts(context)),
