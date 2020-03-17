@@ -16,6 +16,17 @@ class AuthService {
         : null;
   }
 
+  Future<User> currentUser() async {
+    final FirebaseUser user = await _auth.currentUser();
+    return _userFromFirebaseUser(user);
+  }
+
+  userId() async {
+    return await currentUser().then((user) {
+      return user.id;
+    });
+  }
+
   //auth change user stream
   Stream<User> get user {
     return _auth.onAuthStateChanged.map(_userFromFirebaseUser);

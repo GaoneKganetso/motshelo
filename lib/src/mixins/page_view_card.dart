@@ -21,7 +21,7 @@ class PageViewCard extends StatelessWidget {
             children: <Widget>[
               PageViewCardListTile(
                 title: 'Farmer',
-                content: 'Moffat',
+                content: 'Tiro Letshwiti',
                 biggerContent: true,
               ),
               PageViewCardListTile(

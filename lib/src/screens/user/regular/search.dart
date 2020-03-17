@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/scaled_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:matimela/src/models/case.dart';
+import 'package:matimela/src/screens/user/regular/report_matimela.dart';
+import 'package:matimela/src/services/report.dart';
 import 'package:sweet_alert_dialogs/sweet_alert_dialogs.dart';
 
 class SearchAnimal extends StatefulWidget {
@@ -15,11 +16,17 @@ class SearchAnimal extends StatefulWidget {
 }
 
 class _SearchAnimalState extends State<SearchAnimal> {
-  final SearchBarController<Post> _searchBarController = SearchBarController();
+  final SearchBarController<AnimalCase> _searchBarController = SearchBarController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isReplay = false;
-  String _brand, _color, _picture;
+  bool searching = true;
   File file;
+  ReportService _reportService = ReportService();
+
+  @override
+  initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +34,7 @@ class _SearchAnimalState extends State<SearchAnimal> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Search Matimela"),
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.grey[700],
         actions: <Widget>[
           IconButton(
               icon: Icon(
@@ -35,86 +42,113 @@ class _SearchAnimalState extends State<SearchAnimal> {
                 color: Colors.white,
                 size: 30,
               ),
-              onPressed: () => _showModalBottomSheet())
+              onPressed: () => Navigator.push(
+                  context, new MaterialPageRoute(builder: (context) => ReportMatimela())))
         ],
       ),
       body: SafeArea(
-        child: SearchBar<Post>(
-          searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
-          headerPadding: EdgeInsets.symmetric(horizontal: 10),
-          listPadding: EdgeInsets.symmetric(horizontal: 10),
-          onSearch: _getALlPosts,
-          searchBarController: _searchBarController,
-          placeHolder: Padding(
-            padding: EdgeInsets.all(10),
-            child: Text(
-              "List of Matimela Cases",
-              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
-            ),
-          ),
-          cancellationText: Text("Cancel"),
-          emptyWidget: Text("empty"),
-          indexedScaledTileBuilder: (int index) => ScaledTile.count(1, index.isEven ? 2 : 1),
-          header: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              RaisedButton(
-                child: Text("sort"),
-                onPressed: () {
-                  _searchBarController.sortList((Post a, Post b) {
-                    return a.body.compareTo(b.body);
-                  });
-                },
-              ),
-              RaisedButton(
-                child: Text("Desort"),
-                onPressed: () {
-                  _searchBarController.removeSort();
-                },
-              ),
-              RaisedButton(
-                child: Text("Replay"),
-                onPressed: () {
-                  isReplay = !isReplay;
-                  _searchBarController.replayLastSearch();
-                },
-              ),
-            ],
-          ),
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          crossAxisCount: 2,
-          onItemFound: (Post post, int index) {
-            return Container(
-              color: Colors.lightBlue,
-              child: ListTile(
-                title: Text(post.title),
-                isThreeLine: true,
-                subtitle: Text(post.body),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            );
-          },
-        ),
-      ),
+          child: searching
+              ? StreamBuilder(
+                  stream: _reportService.getAllCases(),
+                  builder: (context, snapshot) {
+                    print(snapshot.data);
+                    final int casesLength = snapshot.data.documents.length;
+                    List<AnimalCase> cases = new List<AnimalCase>();
+                    for(int i = 0; i < casesLength; i++){
+                      final DocumentSnapshot _case= snapshot.data.documents[i];
+                      cases.add(new AnimalCase(brand: _case['brand'], color: _case['color']));
+                    }
+                    print(casesLength);
+                    return SearchBar<AnimalCase>(
+                      searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
+                      headerPadding: EdgeInsets.symmetric(horizontal: 10),
+                      listPadding: EdgeInsets.symmetric(horizontal: 10),
+                      onSearch: _getALlPosts,
+                      searchBarController: _searchBarController,
+                      placeHolder: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          "List of Matimela Cases",
+                          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+                        ),
+                      ),
+                      cancellationText: Text("Cancel"),
+                      emptyWidget: Text("empty"),
+                      indexedScaledTileBuilder: (int index) =>
+                          ScaledTile.count(1, index.isEven ? 2 : 1),
+                      header: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          RaisedButton(
+                            child: Text("sort"),
+                            onPressed: () {
+                              _searchBarController.sortList((AnimalCase a, AnimalCase b) {
+                                return a.brand.compareTo(b.brand);
+                              });
+                            },
+                          ),
+                          RaisedButton(
+                            child: Text("Desort"),
+                            onPressed: () {
+                              _searchBarController.removeSort();
+                            },
+                          ),
+                          RaisedButton(
+                            child: Text("Replay"),
+                            onPressed: () {
+                              isReplay = !isReplay;
+                              _searchBarController.replayLastSearch();
+                            },
+                          ),
+                        ],
+                      ),
+                      mainAxisSpacing: 20,
+                      crossAxisSpacing: 5,
+                      crossAxisCount: 1,
+                      suggestions: cases,
+                      onItemFound: (AnimalCase post, int index) {
+                        return Container(
+                          color: Colors.lightBlue,
+                          child: ListTile(
+                            title: Text(post.brand),
+                            isThreeLine: false,
+                            subtitle: Text(post.description),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  })
+              : getPosts(context)),
     );
   }
 
-  Future<List<Post>> _getALlPosts(String text) async {
-    await Future.delayed(Duration(seconds: text.length == 4 ? 10 : 1));
-    if (isReplay) return [Post("Replaying !", "Replaying body")];
-    if (text.length == 5) throw Error();
-    if (text.length == 6) return [];
-    List<Post> posts = [];
+  Widget getPosts(BuildContext context) {
+    return new StreamBuilder<QuerySnapshot>(
+      stream: _reportService.getMatimelaCases(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (!snapshot.hasData) return const Text('Connecting...');
+        final int cardLength = snapshot.data.documents.length;
+        return new ListView.builder(
+          itemCount: cardLength,
+          itemBuilder: (BuildContext context, int index) {
+            final DocumentSnapshot _case = snapshot.data.documents[index];
+            return new ListTile(
+              title: new Text(_case['brand']),
+              subtitle: new Text(_case['description'] ?? ""),
+            );
+          },
+        );
+      },
+    );
+  }
 
-    var random = new Random();
-    for (int i = 0; i < 10; i++) {
-      posts.add(Post("$text $i", "body random number : ${random.nextInt(100)}"));
-    }
-    return posts;
+  Future<List<AnimalCase>> _getALlPosts(String text) async {
+    await Future.delayed(Duration(seconds: text.length == 4 ? 10 : 1));
+    return [];
   }
 
   void showModalDialog() {
@@ -141,124 +175,6 @@ class _SearchAnimalState extends State<SearchAnimal> {
             ],
           );
         });
-  }
-
-  void _showModalBottomSheet() {
-    showModalBottomSheet(
-        context: context,
-        isDismissible: true,
-        builder: (context) {
-          return Container(
-            color: Colors.white,
-            padding: EdgeInsets.all(10),
-            child: Column(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              Text(
-                "Fill the form below for Matimela",
-                style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: ScreenUtil.getInstance().setHeight(30),
-              ),
-              TextFormField(
-                decoration: new InputDecoration(
-                  prefixIcon: Icon(Icons.device_hub),
-                  labelText: "Enter Brand",
-                  fillColor: Colors.white,
-                  border: new OutlineInputBorder(
-                    borderRadius: new BorderRadius.circular(25.0),
-                    borderSide: new BorderSide(),
-                  ),
-                  //fillColor: Colors.green
-                ),
-                validator: (val) {
-                  if (val.length == 0) {
-                    return "Email cannot be empty";
-                  } else {
-                    return null;
-                  }
-                },
-                keyboardType: TextInputType.emailAddress,
-                style: new TextStyle(
-                  fontFamily: "Poppins",
-                ),
-              ),
-              SizedBox(
-                height: ScreenUtil.getInstance().setHeight(30),
-              ),
-              TextFormField(
-                decoration: new InputDecoration(
-                  labelText: "Enter Color",
-                  prefixIcon: Icon(Icons.color_lens),
-                  fillColor: Colors.white,
-                  border: new OutlineInputBorder(
-                    borderRadius: new BorderRadius.circular(25.0),
-                    borderSide: new BorderSide(),
-                  ),
-                  //fillColor: Colors.green
-                ),
-                validator: (val) {
-                  if (val.length == 0) {
-                    return "Color cannot be empty";
-                  } else {
-                    return null;
-                  }
-                },
-                keyboardType: TextInputType.emailAddress,
-                style: new TextStyle(
-                  fontFamily: "Poppins",
-                ),
-              ),
-              SizedBox(
-                height: ScreenUtil.getInstance().setHeight(30),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  RaisedButton(
-                    onPressed: () => _choose(),
-                    child: Text('Choose Image'),
-                  ),
-                  SizedBox(width: 10.0),
-                  RaisedButton(
-                    onPressed: _upload,
-                    child: Text('Upload Image'),
-                  )
-                ],
-              ),
-//              SizedBox(
-//                height: ScreenUtil.getInstance().setHeight(20),
-//              ),
-              //file == null ? Text('No Image Selected') : Image.file(file),
-              SizedBox(
-                height: ScreenUtil.getInstance().setHeight(20),
-              ),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  color: Colors.lightBlue,
-                ),
-                child: FlatButton(
-                  onPressed: null,
-                  child: Text(
-                    "Submit report",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              )
-            ]),
-          );
-        });
-  }
-
-  void _choose() async {
-    file = await ImagePicker.pickImage(source: ImageSource.gallery);
-  }
-
-  void _upload() {
-    if (file == null) return;
-//    String base64Image = base64Encode(file.readAsBytesSync());
-//    String fileName = file.path.split("/").last;
   }
 }
 
