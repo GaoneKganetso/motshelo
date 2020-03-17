@@ -18,4 +18,8 @@ class AnimalCase {
       this.picture,
       this.created,
       this.author});
+
+  String toString() {
+    return brand;
+  }
 }

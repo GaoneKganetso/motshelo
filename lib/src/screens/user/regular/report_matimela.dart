@@ -206,7 +206,9 @@ class _ReportMatimelaState extends State<ReportMatimela> with TickerProviderStat
                         if (_formKey.currentState.validate()) {
                           print("brand ${_brand} && ${_color}");
                           if (file != null)
-                            _reportService.submitReport(_brand, _color, file).whenComplete(() {
+                            _reportService
+                                .submitReport(_brand, _color, file, _location, _description)
+                                .whenComplete(() {
                               setState(() {
                                 loading = false;
                               });

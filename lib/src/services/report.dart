@@ -9,7 +9,8 @@ class ReportService {
   Firestore _firestore = Firestore.instance;
   AuthService _authService = new AuthService();
 
-  Future<void> submitReport(String brand, String color, File file) async {
+  Future<void> submitReport(
+      String brand, String color, File file, String location, String description) async {
     StorageReference storageReference =
         FirebaseStorage.instance.ref().child('reports/${Path.basename(file.path)}');
     StorageUploadTask uploadTask = storageReference.putFile(file);
@@ -22,6 +23,8 @@ class ReportService {
         var data = {
           'brand': brand,
           'color': color,
+          'location': location,
+          'description': description,
           'photo': fileURL,
           'reporter': user.id.toString()
         };

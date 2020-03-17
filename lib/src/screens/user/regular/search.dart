@@ -57,7 +57,7 @@ class _SearchAnimalState extends State<SearchAnimal> {
                       final DocumentSnapshot _case = snapshot.data.documents[i];
                       cases.add(new AnimalCase(brand: _case['brand'], color: _case['color']));
                     }
-                    print(casesLength);
+                    print(cases.toString());
                     return SearchBar<AnimalCase>(
                       searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
                       headerPadding: EdgeInsets.symmetric(horizontal: 10),
