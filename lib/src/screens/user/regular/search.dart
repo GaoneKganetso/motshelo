@@ -62,12 +62,8 @@ class _SearchAnimalState extends State<SearchAnimal> {
         final int casesLength = snapshot.data.documents.length;
         List<DocumentSnapshot> docs = snapshot.data.documents;
         docs.forEach((doc) {
-          cases.add(AnimalCase(
-            brand: doc.data['brand'],
-            color: doc.data['color'],
-            picture: doc.data['photo'],
-            location: doc.data['location'],
-          ));
+          cases.add(AnimalCase("", doc.data['location'], doc.data['reporter'], doc.data['brand'],
+              doc.data['color'], doc.data['photo'], doc.data['created']));
         });
         return animalListComponent(cases);
       },
