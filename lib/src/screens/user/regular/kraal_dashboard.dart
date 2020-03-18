@@ -23,19 +23,20 @@ class _MyKraalPageState extends State<MyKraalPage> {
         children: <Widget>[
           Stack(
             children: <Widget>[
+//              Container(
+//                alignment: Alignment(0.0, -0.40),
+//                height: 100.0,
+//                color: Colors.white,
+//                child: Text(
+//                  'My Livestock',
+//                  style: TextStyle(fontFamily: 'Montserrat', fontSize: 20.0),
+//                ),
+//              ),
               Container(
-                alignment: Alignment(0.0, -0.40),
-                height: 100.0,
-                color: Colors.white,
-                child: Text(
-                  'My Livestock',
-                  style: TextStyle(fontFamily: 'Montserrat', fontSize: 20.0),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(25.0, 90.0, 25.0, 0.0),
+                margin: EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 0.0),
+                height: 120,
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Colors.white.withOpacity(.85),
                     borderRadius: BorderRadius.circular(20.0),
                     boxShadow: [BoxShadow(blurRadius: 2.0, color: Colors.grey)]),
                 child: Row(
@@ -44,7 +45,7 @@ class _MyKraalPageState extends State<MyKraalPage> {
                     Stack(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.fromLTRB(25.0, 25.0, 5.0, 5.0),
+                          padding: EdgeInsets.fromLTRB(25.0, 15.0, 5.0, 5.0),
                           child: Text(
                             'YOU HAVE',
                             style: TextStyle(
@@ -55,7 +56,7 @@ class _MyKraalPageState extends State<MyKraalPage> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(25.0, 40.0, 5.0, 25.0),
+                          padding: EdgeInsets.fromLTRB(25.0, 30.0, 5.0, 25.0),
                           child: Text(
                             '206',
                             style: TextStyle(
@@ -64,22 +65,33 @@ class _MyKraalPageState extends State<MyKraalPage> {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 40.0),
                           ),
-                        )
+                        ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(25.0, 80.0, 5.0, 25.0),
+                          child: Text(
+                            'Livestock',
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontFamily: 'Quicksand',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14.0),
+                          ),
+                        ),
                       ],
                     ),
                     SizedBox(width: 60.0),
                     Container(
-                      height: 60.0,
+                      height: 50.0,
                       width: 125.0,
                       decoration: BoxDecoration(
-                          color: Colors.blue[400].withOpacity(0.5),
+                          color: Colors.lightBlue[300].withOpacity(0.5),
                           borderRadius: BorderRadius.circular(10.0)),
                       child: Center(
                         child: Text('Register more',
                             style: TextStyle(
                                 fontFamily: 'Quicksand',
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black)),
+                                color: Colors.white)),
                       ),
                     )
                   ],
@@ -87,7 +99,7 @@ class _MyKraalPageState extends State<MyKraalPage> {
               )
             ],
           ),
-          SizedBox(height: 40.0),
+          SizedBox(height: 30.0),
           Container(
               padding: EdgeInsets.only(left: 25.0, right: 25.0),
               child: Row(
@@ -123,6 +135,10 @@ class _MyKraalPageState extends State<MyKraalPage> {
                   'https://sc01.alicdn.com/kf/HTB1XNneKpXXXXaFXFXXq6xXFXXXX/CALF-GROWING-FEEDS-LIVESTOCK-FEEDS.jpg_300x300.jpg'),
               _buildCard('Vaccine', 'Away', 2,
                   'https://www.srtfund.org/lib/thumb.php?src=11557812088309481698.jpg&y=630&x=708&zc=1'),
+              _buildCard(
+                  'Livestock', 'Available', 3, 'https://www.fao.org/uploads/pics/cows_01.jpg'),
+              _buildCard('Maintenance', 'Available', 4,
+                  'https://www.pngitem.com/pimgs/m/481-4816759_maintenance-icon-png-transparent-png.png'),
             ],
           )
         ],
