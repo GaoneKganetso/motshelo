@@ -36,6 +36,7 @@ dependencies:
   sweet_alert_dialogs: "^0.2.0"
   image_picker:
   toast:
+  http:
 
 dev_dependencies:
   flutter_test:

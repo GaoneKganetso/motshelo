@@ -9,6 +9,7 @@ class AnimalCase {
   final String created;
   final String picture;
   final String author;
+  final String owner;
 
   AnimalCase(
       {this.description,
@@ -17,7 +18,8 @@ class AnimalCase {
       this.location,
       this.picture,
       this.created,
-      this.author});
+      this.author,
+      this.owner});
 
   String toString() {
     return brand;
