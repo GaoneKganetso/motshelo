@@ -20,7 +20,7 @@ class PageViewCardListTile extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.caption,
+          style: Theme.of(context).textTheme.subtitle,
         ),
         SizedBox(
           height: 4.0,
@@ -28,8 +28,8 @@ class PageViewCardListTile extends StatelessWidget {
         Text(
           content,
           style: biggerContent
-              ? Theme.of(context).textTheme.title
-              : Theme.of(context).textTheme.subtitle,
+              ? Theme.of(context).textTheme.subtitle
+              : Theme.of(context).textTheme.caption,
         ),
       ],
     );

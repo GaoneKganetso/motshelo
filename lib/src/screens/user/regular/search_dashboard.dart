@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:matimela/src/models/case.dart';
-import 'package:matimela/src/screens/user/regular/report_matimela.dart';
+import 'package:matimela/src/screens/user/regular/report_dashboard.dart';
 import 'package:matimela/src/services/report.dart';
 import 'package:matimela/src/utils/constants.dart';
 import 'package:sweet_alert_dialogs/sweet_alert_dialogs.dart';
@@ -31,7 +31,12 @@ class _SearchAnimalState extends State<SearchAnimal> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          title: Text("Search Matimela"),
+          title: Text(
+            "Search Matimela",
+            style: TextStyle(
+              fontFamily: 'Quicksand',
+            ),
+          ),
           backgroundColor: Colors.grey[700],
           actions: <Widget>[
             IconButton(
@@ -86,6 +91,9 @@ class _SearchAnimalState extends State<SearchAnimal> {
         },
         decoration: InputDecoration(
           hintText: "Search",
+          hintStyle: TextStyle(
+            fontFamily: 'Quicksand',
+          ),
           border: InputBorder.none,
           suffixIcon: Icon(
             Icons.search,
@@ -145,6 +153,7 @@ class _SearchAnimalState extends State<SearchAnimal> {
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'Quicksand',
                           fontSize: 14,
                           decorationStyle: TextDecorationStyle.solid),
                     ),
@@ -155,6 +164,7 @@ class _SearchAnimalState extends State<SearchAnimal> {
                       "Color: ${animal.color}" ?? "",
                       style: TextStyle(
                         color: Color(0xff8C68EC),
+                        fontFamily: 'Quicksand',
                         fontSize: 13,
                       ),
                     ),
@@ -165,6 +175,7 @@ class _SearchAnimalState extends State<SearchAnimal> {
                       "Location: ${animal.location ?? 'None'}",
                       style: TextStyle(
                         color: Color(0xff8C68EC),
+                        fontFamily: 'Quicksand',
                         fontSize: 12,
                       ),
                     ),
@@ -175,6 +186,7 @@ class _SearchAnimalState extends State<SearchAnimal> {
                       "Owner: ${animal.owner ?? 'None'} ",
                       style: TextStyle(
                         color: Color(0xff8C68EC),
+                        fontFamily: 'Quicksand',
                         fontSize: 12,
                       ),
                     ),

@@ -40,7 +40,7 @@ class UserInfo extends StatelessWidget {
           children: <Widget>[
             Text(
               name,
-              style: Theme.of(context).textTheme.headline.copyWith(color: Colors.white),
+              style: Theme.of(context).textTheme.headline.copyWith(color: Colors.black),
             ),
             SizedBox(
               width: 8.0,
@@ -49,14 +49,14 @@ class UserInfo extends StatelessWidget {
               width: 12.0,
               height: 12.0,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.3),
+                color: Colors.black.withOpacity(0.3),
                 shape: BoxShape.circle,
               ),
               child: Center(
                 child: Icon(
                   CupertinoIcons.play_arrow_solid,
                   size: 8.0,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -67,7 +67,7 @@ class UserInfo extends StatelessWidget {
         ),
         Text(
           id,
-          style: Theme.of(context).textTheme.caption.copyWith(color: Colors.white.withOpacity(0.6)),
+          style: Theme.of(context).textTheme.caption.copyWith(color: Colors.black.withOpacity(0.9)),
         ),
         SizedBox(
           height: 6.0,

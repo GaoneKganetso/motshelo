@@ -22,7 +22,7 @@ class SquareButton extends StatelessWidget {
             padding: EdgeInsets.zero,
             borderRadius: BorderRadius.circular(20.0),
             onPressed: action,
-            color: Color(0xFFB42827),
+            color: Colors.green,
             child: Icon(
               icon.icon,
               size: 26.0,
@@ -38,7 +38,10 @@ class SquareButton extends StatelessWidget {
           child: Center(
             child: Text(
               label,
-              style: Theme.of(context).textTheme.caption.copyWith(color: Colors.white),
+              style: Theme.of(context)
+                  .textTheme
+                  .caption
+                  .copyWith(color: Colors.black87, fontFamily: 'Quicksand', fontSize: 14),
             ),
           ),
         ),

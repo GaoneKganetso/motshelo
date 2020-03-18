@@ -6,7 +6,8 @@ import 'package:matimela/src/mixins/page_view_card.dart';
 import 'package:matimela/src/mixins/square_button.dart';
 import 'package:matimela/src/mixins/tracking_lines.dart';
 import 'package:matimela/src/screens/user/profile.dart';
-import 'package:matimela/src/screens/user/regular/search.dart';
+import 'package:matimela/src/screens/user/regular/kraal_dashboard.dart';
+import 'package:matimela/src/screens/user/regular/search_dashboard.dart';
 import 'package:matimela/src/services/auth.dart';
 
 class HomePage extends StatefulWidget {
@@ -35,7 +36,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      backgroundColor: Color(0xFF2B292A),
+      backgroundColor: Colors.white.withOpacity(.8),
       child: Stack(
         children: <Widget>[
           Positioned(
@@ -43,7 +44,7 @@ class _HomePageState extends State<HomePage> {
             left: 0.0,
             right: 0.0,
             child: CupertinoNavigationBar(
-              backgroundColor: Color(0xFF2B292A),
+              backgroundColor: Colors.grey[800],
               border: Border.all(
                 style: BorderStyle.none,
               ),
@@ -109,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                           label: 'My Kraal',
                           action: () {
                             Navigator.push(context,
-                                new MaterialPageRoute(builder: (context) => SearchAnimal()));
+                                new MaterialPageRoute(builder: (context) => MyKraalPage()));
                           },
                         ),
                         SquareButton(
@@ -140,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                             width: 7.0,
                             height: 7.0,
                             decoration: BoxDecoration(
-                              color: Color(0xFFB42827),
+                              color: Colors.green,
                               borderRadius: BorderRadius.circular(5.0),
                             ),
                           ),
@@ -150,7 +151,7 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             'News Feed',
                             style:
-                                Theme.of(context).textTheme.subtitle.copyWith(color: Colors.white),
+                                Theme.of(context).textTheme.subtitle.copyWith(color: Colors.black),
                           ),
                           Expanded(
                             child: SizedBox(),
@@ -208,7 +209,7 @@ class _HomePageState extends State<HomePage> {
             right: 0.0,
             child: Container(
               height: 90.0,
-              color: Color(0xFFB42827),
+              color: Colors.green.withOpacity(.7),
               child: Stack(
                 children: <Widget>[
                   Padding(
@@ -302,17 +303,17 @@ class _HomePageState extends State<HomePage> {
                     height: MediaQuery.of(context).size.height -
                         (MediaQuery.of(context).size.height / 1.8 - 90.0) -
                         120.0,
-                    color: Color(0xFFB42827),
+                    color: Colors.grey.withOpacity(.4),
                     child: Stack(
                       children: <Widget>[
                         Positioned(
                           top: 50.0,
-                          left: 20.0,
+                          right: 10.0,
                           child: GestureDetector(
                             onTap: () => setState(() => _isDrawerOpen = false),
                             child: Icon(
                               CupertinoIcons.clear,
-                              color: Colors.white,
+                              color: Colors.black,
                               size: 40.0,
                             ),
                           ),

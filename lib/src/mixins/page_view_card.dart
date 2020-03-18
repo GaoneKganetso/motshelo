@@ -9,6 +9,7 @@ class PageViewCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 7.0),
       child: Card(
+        color: Colors.grey[200],
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
         ),
@@ -44,9 +45,7 @@ class PageViewCard extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         'Animal details',
-                        style: TextStyle(
-                          color: Color(0xFFB42827),
-                        ),
+                        style: TextStyle(color: Colors.black, fontFamily: 'Quicksand'),
                       ),
                       Expanded(child: SizedBox()),
                       RotatedBox(
@@ -58,7 +57,7 @@ class PageViewCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  color: Colors.redAccent.withOpacity(0.3),
+                  color: Colors.green.withOpacity(0.3),
                   onPressed: () {},
                 ),
               )

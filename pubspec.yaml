@@ -89,6 +89,16 @@ flutter:
     - family: Poppins-Medium
       fonts:
         - asset: assets/Poppins-Medium.ttf
+    - family: Montserrat
+      fonts:
+        - asset: assets/Montserrat-SemiBold.ttf
+        - asset: assets/Montserrat-SemiBoldItalic.ttf
+          style: italic
+    - family: Quicksand
+      fonts:
+        - asset: assets/Quicksand-Medium.ttf
+        - asset: assets/Quicksand-Bold.ttf
+          weight: 700
 
   #
   # For details regarding fonts from package dependencies,
