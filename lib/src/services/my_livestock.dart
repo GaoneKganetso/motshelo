@@ -43,4 +43,8 @@ class LivestockManager {
         .getDocuments();
     return docs.documents.length;
   }
+
+  Stream<QuerySnapshot> getMyLivestock(String id) {
+    return _fireStore.collection('livestock').where('owner', isEqualTo: id.toString()).snapshots();
+  }
 }
