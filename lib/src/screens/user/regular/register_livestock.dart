@@ -4,20 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:matimela/src/services/report.dart';
+import 'package:matimela/src/services/my_livestock.dart';
 import 'package:toast/toast.dart';
 
-class ReportMatimela extends StatefulWidget {
+class RegisterLivestock extends StatefulWidget {
   @override
-  _ReportMatimelaState createState() => _ReportMatimelaState();
+  _RegisterLivestockState createState() => _RegisterLivestockState();
 }
 
-class _ReportMatimelaState extends State<ReportMatimela> with TickerProviderStateMixin {
+class _RegisterLivestockState extends State<RegisterLivestock> with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
-  ReportService _reportService = ReportService();
+  LivestockManager _livestockManager = LivestockManager();
   bool loading = false;
   bool isReplay = false;
-  String _brand, _color, _location, _description, _tagNumber;
+  String _brand, _color, _location, _tagNumber;
   File file;
 
   Future _choose() async {
@@ -43,7 +43,7 @@ class _ReportMatimelaState extends State<ReportMatimela> with TickerProviderStat
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text("Report Matimela"),
+        title: Text("Register Livestock"),
         backgroundColor: Colors.grey[700],
         actions: <Widget>[],
       ),
@@ -55,7 +55,7 @@ class _ReportMatimelaState extends State<ReportMatimela> with TickerProviderStat
         child: SingleChildScrollView(
           child: Column(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
             Text(
-              "Fill the form below for Matimela",
+              "Fill the form below to add livestock",
               style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold),
             ),
             SizedBox(
@@ -148,41 +148,21 @@ class _ReportMatimelaState extends State<ReportMatimela> with TickerProviderStat
                     ),
                     TextFormField(
                       decoration: new InputDecoration(
-                        labelText: "Description (optional)",
-                        prefixIcon: Icon(Icons.home),
-                        fillColor: Colors.white,
-                        border: new OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(25.0),
-                          borderSide: new BorderSide(),
-                        ),
-                        //fillColor: Colors.green
-                      ),
-                      onChanged: (val) => setState(() => this._description = val),
-                      keyboardType: TextInputType.emailAddress,
-                      style: new TextStyle(
-                        fontFamily: "Poppins",
-                      ),
-                    ),
-                    SizedBox(
-                      height: ScreenUtil.getInstance().setHeight(30),
-                      ),
-                    TextFormField(
-                      decoration: new InputDecoration(
                         labelText: "Tag Number (optional)",
                         prefixIcon: Icon(Icons.bookmark_border),
                         fillColor: Colors.white,
                         border: new OutlineInputBorder(
                           borderRadius: new BorderRadius.circular(25.0),
                           borderSide: new BorderSide(),
-                          ),
-                        //fillColor: Colors.green
                         ),
+                        //fillColor: Colors.green
+                      ),
                       onChanged: (val) => setState(() => this._tagNumber = val),
                       keyboardType: TextInputType.number,
                       style: new TextStyle(
                         fontFamily: "Poppins",
-                        ),
                       ),
+                    ),
                   ],
                 )),
             SizedBox(
@@ -226,20 +206,20 @@ class _ReportMatimelaState extends State<ReportMatimela> with TickerProviderStat
                         if (_formKey.currentState.validate()) {
                           print("brand ${_brand} && ${_color}");
                           if (file != null)
-                            _reportService
-                                .submitReport(_brand, _color, file, _location, _description, _tagNumber)
+                            _livestockManager
+                                .registerLivestock(_brand, _color, file, _location, _tagNumber)
                                 .whenComplete(() {
                               setState(() {
                                 loading = false;
                                 _formKey.currentState.reset();
                               });
-                              Toast.show("Successfully added matimela case.", context,
+                              Toast.show("Successfully registered livestock.", context,
                                   duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
                             });
                         }
                       },
                       child: Text(
-                        "Submit report",
+                        "Register",
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

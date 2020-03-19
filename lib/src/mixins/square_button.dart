@@ -33,7 +33,7 @@ class SquareButton extends StatelessWidget {
           height: 8.0,
         ),
         Container(
-          width: 60.0,
+          width: 85.0,
           height: 20.0,
           child: Center(
             child: Text(

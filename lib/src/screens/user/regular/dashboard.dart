@@ -122,8 +122,8 @@ class _HomePageState extends State<HomePage> {
                           },
                         ),
                         SquareButton(
-                          icon: Icon(FontAwesomeIcons.solidComments),
-                          label: 'Message',
+                          icon: Icon(FontAwesomeIcons.comments),
+                          label: 'Notifications',
                           action: () {
                             Navigator.push(context,
                                 new MaterialPageRoute(builder: (context) => SearchAnimal()));

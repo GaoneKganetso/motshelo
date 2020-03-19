@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:matimela/src/screens/user/regular/register_livestock.dart';
+import 'package:matimela/src/services/my_livestock.dart';
 
 class MyKraalPage extends StatefulWidget {
   @override
@@ -7,6 +8,7 @@ class MyKraalPage extends StatefulWidget {
 }
 
 class _MyKraalPageState extends State<MyKraalPage> {
+  LivestockManager _livestockManager = LivestockManager();
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -58,14 +60,18 @@ class _MyKraalPageState extends State<MyKraalPage> {
                         ),
                         Container(
                           padding: EdgeInsets.fromLTRB(25.0, 30.0, 5.0, 25.0),
-                          child: Text(
-                            '20',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'Quicksand',
-                                fontWeight: FontWeight.bold,
-                                fontSize: 40.0),
-                          ),
+                          child: FutureBuilder(
+                              future: _livestockManager.countMyLivestock(),
+                              builder: (context, snapshot) {
+                                return Text(
+                                  snapshot.hasData ? '${snapshot.data.toString()}' : 'counting...',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Quicksand',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: snapshot.hasData ? 40.0 : 20),
+                                );
+                              }),
                         ),
                         Container(
                           padding: EdgeInsets.fromLTRB(25.0, 80.0, 5.0, 25.0),
