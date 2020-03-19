@@ -35,19 +35,12 @@ class LivestockManager {
     });
   }
 
-  Future<int> countMyLivestock() async {
-    print('streaming..');
-    int count = 0;
+  Future countMyLivestock() async {
     var user = await _authService.currentUser();
-    await _fireStore
+    var docs = await _fireStore
         .collection('livestock')
         .where('owner', isEqualTo: user.id.toString())
-        .snapshots()
-        .listen((snapshot) {
-      count += snapshot.documents.length;
-    });
-
-    print('count is ${count}');
-    return count;
+        .getDocuments();
+    return docs.documents.length;
   }
 }
