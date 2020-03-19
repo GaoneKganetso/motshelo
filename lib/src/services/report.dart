@@ -6,7 +6,7 @@ import 'package:matimela/src/services/auth.dart';
 import 'package:path/path.dart' as Path;
 
 class ReportService {
-  Firestore _firestore = Firestore.instance;
+  Firestore _fireStore = Firestore.instance;
   AuthService _authService = new AuthService();
 
   Future<void> submitReport(
@@ -28,7 +28,7 @@ class ReportService {
           'photo': fileURL,
           'reporter': user.id.toString()
         };
-        _firestore.collection("cases").add(data).then((results) {
+        _fireStore.collection("cases").add(data).then((results) {
           print("successfully reported a case");
         });
       });
@@ -36,10 +36,10 @@ class ReportService {
   }
 
   Stream<QuerySnapshot> getMatimelaCases() {
-    return _firestore.collection("cases").snapshots();
+    return _fireStore.collection("cases").snapshots();
   }
 
   Stream<QuerySnapshot> getAllCases() {
-    return _firestore.collection("cases").snapshots();
+    return _fireStore.collection("cases").snapshots();
   }
 }

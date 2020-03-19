@@ -44,7 +44,7 @@ class PageViewCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       Text(
-                        'Animal details',
+                        'click for more details',
                         style: TextStyle(color: Colors.black, fontFamily: 'Quicksand'),
                       ),
                       Expanded(child: SizedBox()),

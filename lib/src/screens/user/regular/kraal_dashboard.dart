@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:matimela/src/screens/user/regular/register_livestock.dart';
 
 class MyKraalPage extends StatefulWidget {
   @override
@@ -58,7 +59,7 @@ class _MyKraalPageState extends State<MyKraalPage> {
                         Container(
                           padding: EdgeInsets.fromLTRB(25.0, 30.0, 5.0, 25.0),
                           child: Text(
-                            '206',
+                            '20',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Quicksand',
@@ -87,11 +88,15 @@ class _MyKraalPageState extends State<MyKraalPage> {
                           color: Colors.lightBlue[300].withOpacity(0.5),
                           borderRadius: BorderRadius.circular(10.0)),
                       child: Center(
-                        child: Text('Register more',
-                            style: TextStyle(
-                                fontFamily: 'Quicksand',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white)),
+                        child: FlatButton(
+                          onPressed: () => Navigator.of(context).push(
+                              new MaterialPageRoute(builder: (context) => RegisterLivestock())),
+                          child: Text('Register more',
+                              style: TextStyle(
+                                  fontFamily: 'Quicksand',
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white)),
+                        ),
                       ),
                     )
                   ],

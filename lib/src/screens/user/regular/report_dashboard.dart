@@ -211,11 +211,11 @@ class _ReportMatimelaState extends State<ReportMatimela> with TickerProviderStat
                                 .whenComplete(() {
                               setState(() {
                                 loading = false;
+                                _formKey.currentState.reset();
                               });
                               Toast.show("Successfully added matimela case.", context,
                                   duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
                             });
-                          _formKey.currentState.reset();
                         }
                       },
                       child: Text(
