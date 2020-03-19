@@ -55,7 +55,7 @@ class _MyKraalPageState extends State<MyKraalPage> {
                                 color: Colors.grey,
                                 fontFamily: 'Quicksand',
                                 fontWeight: FontWeight.bold,
-                                fontSize: 14.0),
+                                fontSize: 12.0),
                           ),
                         ),
                         Container(
@@ -89,7 +89,7 @@ class _MyKraalPageState extends State<MyKraalPage> {
                     SizedBox(width: 60.0),
                     Container(
                       height: 50.0,
-                      width: 125.0,
+                      width: 110.0,
                       decoration: BoxDecoration(
                           color: Colors.lightBlue[300].withOpacity(0.5),
                           borderRadius: BorderRadius.circular(10.0)),
@@ -97,7 +97,7 @@ class _MyKraalPageState extends State<MyKraalPage> {
                         child: FlatButton(
                           onPressed: () => Navigator.of(context).push(
                               new MaterialPageRoute(builder: (context) => RegisterLivestock())),
-                          child: Text('Register more',
+                          child: Text('Register',
                               style: TextStyle(
                                   fontFamily: 'Quicksand',
                                   fontWeight: FontWeight.bold,

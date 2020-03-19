@@ -69,33 +69,15 @@ class _HomePageState extends State<HomePage> {
                   (MediaQuery.of(context).size.height / 1.8) -
                   120.0,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-//                    RichText(
-//                      textAlign: TextAlign.start,
-//                      text: TextSpan(children: [
-//                        TextSpan(
-//                          text: 'Welcome! ',
-//                          style: TextStyle(
-//                            fontWeight: FontWeight.w500,
-//                            fontSize: 26.0,
-//                          ),
-//                        ),
-//                        TextSpan(
-//                          text: 'Moffat',
-//                          style: TextStyle(
-//                            fontSize: 20.0,
-//                          ),
-//                        ),
-//                      ]),
-//                    ),
                     Row(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         SquareButton(
                           icon: Icon(FontAwesomeIcons.search),
