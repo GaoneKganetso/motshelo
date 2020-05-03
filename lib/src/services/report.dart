@@ -82,7 +82,7 @@ class ReportService {
           .collection('cases')
           .document(tag)
           .collection('map_coords')
-          .add({'position': point.data, 'uid': id});
+          .add({'position': point.data, 'uid': id, 'date': new DateTime.now(), });
     }
   }
 

@@ -48,14 +48,17 @@ class _SearchAnimalState extends State<SearchAnimal> {
                   size: 30,
                 ),
                 onPressed: () => Navigator.push(
-                    context, new MaterialPageRoute(builder: (context) => ReportMatimela())))
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) => ReportMatimela())))
           ],
         ),
         body: Stack(
           fit: StackFit.loose,
           children: <Widget>[
             searchBarComponent(),
-            Container(margin: EdgeInsets.only(top: 80), child: getPosts(context)),
+            Container(
+                margin: EdgeInsets.only(top: 80), child: getPosts(context)),
           ],
         ));
   }
@@ -68,8 +71,14 @@ class _SearchAnimalState extends State<SearchAnimal> {
         if (!snapshot.hasData) return const Text('Connecting...');
         List<DocumentSnapshot> docs = snapshot.data.documents;
         docs.forEach((doc) {
-          cases.add(AnimalCase("", doc.data['date'], doc.data['reporter'], doc.data['brand'],
-              doc.data['color'],  doc.data['tag'],doc.data['photo']));
+          cases.add(AnimalCase(
+              "",
+              doc.data['date'],
+              doc.data['reporter'],
+              doc.data['brand'],
+              doc.data['color'],
+              doc.data['tag'],
+              doc.data['photo']));
         });
         return animalListComponent(cases);
       },
@@ -81,7 +90,8 @@ class _SearchAnimalState extends State<SearchAnimal> {
       margin: EdgeInsets.only(top: 20, left: 20, right: 20),
       height: 60,
       decoration: BoxDecoration(
-          color: Colors.grey[200], borderRadius: BorderRadius.all(Radius.circular(15))),
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.all(Radius.circular(15))),
       padding: EdgeInsets.fromLTRB(20, 20, 10, 10),
       child: TextField(
         cursorColor: DARK_ORANGE,
@@ -121,14 +131,15 @@ class _SearchAnimalState extends State<SearchAnimal> {
       padding: EdgeInsets.all(20),
       physics: BouncingScrollPhysics(),
       itemCount: filteredList.length,
-      itemBuilder: (context, index) => animalItemComponent(filteredList[index], index),
+      itemBuilder: (context, index) =>
+          animalItemComponent(filteredList[index], index),
     );
   }
 
   Widget animalItemComponent(AnimalCase animal, int index) {
     return Card(
-      child: GestureDetector(
-        child: Padding(
+        child: GestureDetector(
+      child: Padding(
           padding: EdgeInsets.all(10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -218,9 +229,12 @@ class _SearchAnimalState extends State<SearchAnimal> {
 //              )
             ],
           )),
-          onTap: () =>Navigator.push(context,MaterialPageRoute(builder: (context) => new MapsLocationTrackerPage(tag: animal.tag,key: _mapKey))),
-      )
-    );
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  new MapsLocationTrackerPage(tag: animal.tag, key: _mapKey))),
+    ));
   }
 
   void showModalDialog() {

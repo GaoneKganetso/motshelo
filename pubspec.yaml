@@ -44,6 +44,7 @@ dependencies:
   progress_dialog:
   shared_preferences:
   flutter_polyline_points:
+  random_string: ^2.0.1
 
 dev_dependencies:
   flutter_test:
