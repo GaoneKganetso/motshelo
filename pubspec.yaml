@@ -36,7 +36,14 @@ dependencies:
   sweet_alert_dialogs: "^0.2.0"
   image_picker:
   toast:
+  geolocator: ^5.3.1
+  location:
+  google_maps_flutter: any
   http:
+  geoflutterfire: any
+  progress_dialog:
+  shared_preferences:
+  flutter_polyline_points:
 
 dev_dependencies:
   flutter_test:

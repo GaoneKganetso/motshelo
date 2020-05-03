@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:matimela/src/screens/user/regular/register_livestock.dart';
+import 'package:matimela/src/screens/user/regular/my_livestocks_dashboard.dart';
 import 'package:matimela/src/services/my_livestock.dart';
 
 class MyKraalPage extends StatefulWidget {
@@ -95,8 +95,8 @@ class _MyKraalPageState extends State<MyKraalPage> {
                           borderRadius: BorderRadius.circular(10.0)),
                       child: Center(
                         child: FlatButton(
-                          onPressed: () => Navigator.of(context).push(
-                              new MaterialPageRoute(builder: (context) => RegisterLivestock())),
+                          onPressed: () => Navigator.of(context)
+                              .push(new MaterialPageRoute(builder: (context) => MyLivestock())),
                           child: Text('Register',
                               style: TextStyle(
                                   fontFamily: 'Quicksand',
@@ -210,10 +210,14 @@ class _MyKraalPageState extends State<MyKraalPage> {
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(10.0), bottomRight: Radius.circular(10.0)),
                     ),
-                    child: Center(
-                      child: Text(
-                        'View',
-                        style: TextStyle(color: Colors.white, fontFamily: 'Quicksand'),
+                    child: InkWell(
+                      onTap: () => Navigator.of(context)
+                          .push(new MaterialPageRoute(builder: (context) => MyLivestock())),
+                      child: Center(
+                        child: Text(
+                          'View',
+                          style: TextStyle(color: Colors.white, fontFamily: 'Quicksand'),
+                        ),
                       ),
                     )))
           ],

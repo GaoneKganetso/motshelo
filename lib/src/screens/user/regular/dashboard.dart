@@ -305,7 +305,7 @@ class _HomePageState extends State<HomePage> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 46.0, bottom: 46.0),
                             child: UserInfo(
-                                picture: 'assets/image/profile/user-default.png',
+                                picture: 'assets/image/profile/userdefault.png',
                                 name: 'Tiro',
                                 id: '0023-mor'
                                     'e'),

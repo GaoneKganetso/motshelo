@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:matimela/src/models/case.dart';
+import 'package:matimela/src/screens/user/regular/maps_location_tracker_page.dart';
 import 'package:matimela/src/screens/user/regular/report_dashboard.dart';
 import 'package:matimela/src/services/report.dart';
 import 'package:matimela/src/utils/constants.dart';
@@ -20,6 +21,7 @@ class _SearchAnimalState extends State<SearchAnimal> {
   String searchText;
   File file;
   ReportService _reportService = ReportService();
+  final Key _mapKey = UniqueKey();
 
   @override
   initState() {
@@ -64,11 +66,10 @@ class _SearchAnimalState extends State<SearchAnimal> {
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         List<AnimalCase> cases = new List<AnimalCase>();
         if (!snapshot.hasData) return const Text('Connecting...');
-        final int casesLength = snapshot.data.documents.length;
         List<DocumentSnapshot> docs = snapshot.data.documents;
         docs.forEach((doc) {
-          cases.add(AnimalCase("", doc.data['location'], doc.data['reporter'], doc.data['brand'],
-              doc.data['color'], doc.data['photo'], doc.data['created']));
+          cases.add(AnimalCase("", doc.data['date'], doc.data['reporter'], doc.data['brand'],
+              doc.data['color'],  doc.data['tag'],doc.data['photo']));
         });
         return animalListComponent(cases);
       },
@@ -126,7 +127,8 @@ class _SearchAnimalState extends State<SearchAnimal> {
 
   Widget animalItemComponent(AnimalCase animal, int index) {
     return Card(
-      child: Padding(
+      child: GestureDetector(
+        child: Padding(
           padding: EdgeInsets.all(10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -172,7 +174,7 @@ class _SearchAnimalState extends State<SearchAnimal> {
                       height: 5,
                     ),
                     Text(
-                      "Location: ${animal.location ?? 'None'}",
+                      "Tag: ${animal.tag ?? 'None'}",
                       style: TextStyle(
                         color: Color(0xff8C68EC),
                         fontFamily: 'Quicksand',
@@ -183,7 +185,7 @@ class _SearchAnimalState extends State<SearchAnimal> {
                       height: 5,
                     ),
                     Text(
-                      "Owner: ${animal.owner ?? 'None'} ",
+                      "Last Seen: ${animal.lastSeen ?? 'None'} ",
                       style: TextStyle(
                         color: Color(0xff8C68EC),
                         fontFamily: 'Quicksand',
@@ -216,6 +218,8 @@ class _SearchAnimalState extends State<SearchAnimal> {
 //              )
             ],
           )),
+          onTap: () =>Navigator.push(context,MaterialPageRoute(builder: (context) => new MapsLocationTrackerPage(tag: animal.tag,key: _mapKey))),
+      )
     );
   }
 

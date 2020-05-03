@@ -1,18 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:matimela/src/models/animal.dart';
 
 class AnimalCase extends Animal {
-  String description;
-  String location;
-  String created;
-  String reporter;
-  AnimalCase(String description, String location, String reporter, String brand, String color,
-      String picture, String created)
-      : super(brand, color, picture) {
+
+  AnimalCase(String description, Timestamp date, String reporter, String brand, String color, String tag, String picture)
+      : super(brand, color, picture, tag) {
     this.description = description;
-    this.location = location;
-    this.created = created;
+    this.lastSeen = date != null ? date.toDate().toString() : '';
     this.reporter = reporter;
   }
+
+  String created;
+  String description;
+  String lastSeen;
+  String reporter;
 
   String toString() {
     return brand;

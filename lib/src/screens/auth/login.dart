@@ -12,7 +12,7 @@ class Authenticate extends StatefulWidget {
 }
 
 class _AuthenticateState extends State<Authenticate> with TickerProviderStateMixin {
-  bool _isSelected, loading = false;
+  bool loading = false;
   final AuthService _authService = AuthService();
   final _formKey = GlobalKey<FormState>();
   String _email, _password = "";

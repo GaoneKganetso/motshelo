@@ -2,38 +2,88 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:matimela/src/services/auth.dart';
 import 'package:path/path.dart' as Path;
+import 'package:provider/provider.dart';
+
+import 'app_state.dart';
 
 class ReportService {
-  Firestore _fireStore = Firestore.instance;
-  AuthService _authService = new AuthService();
+  Geoflutterfire geo = Geoflutterfire();
 
-  Future<void> submitReport(String brand, String color, File file, String location,
-      String description, String tag) async {
-    StorageReference storageReference =
+  AuthService _authService = new AuthService();
+  Firestore _fireStore = Firestore.instance;
+
+  Future<void> submitReport(String brand, String color, File file,String description, String tag, context) async {
+
+    if(file != null){
+      StorageReference storageReference =
         FirebaseStorage.instance.ref().child('reports/${Path.basename(file.path)}');
     StorageUploadTask uploadTask = storageReference.putFile(file);
     await uploadTask.onComplete;
-
     await storageReference.getDownloadURL().then((fileURL) {
       print('File Uploaded');
       _authService.currentUser().then((user) {
-        print(fileURL);
         var data = {
           'brand': brand,
           'color': color,
-          'location': location,
           'description': description,
           'photo': fileURL,
           'tag': tag,
-          'reporter': user.id.toString()
+          'reporter': user.id.toString(),
+          'date': new DateTime.now(),
         };
-        _fireStore.collection("cases").add(data).then((results) {
+        _fireStore.collection("cases")
+        .document(tag)
+        .setData(data).then((results) {
           print("successfully reported a case");
         });
       });
     });
+    }else{
+      _authService.currentUser().then((user) {
+        var data = {
+          'brand': brand,
+          'color': color,
+          'description': description,
+          'photo': '',
+          'tag': tag,
+          'reporter': user.id.toString(),
+          'date': new DateTime.now(),
+        };
+        _fireStore.collection("cases")
+        .document(tag)
+        .setData(data).then((results) {
+          print("successfully reported a case");
+        });
+      });
+    }
+
+    var appState = Provider.of<AppState>(context,listen: false);
+    Position pos = appState.getLocationCoordinates();
+
+    _updateAnimalLocation(tag, pos);
+  }
+
+  _updateAnimalLocation(String tag, Position pos) async{
+    GeoFirePoint point =
+        geo.point(latitude: pos.latitude, longitude: pos.longitude);
+    print('Geo point coordinates');
+    String id = await _authService.currentUser().then((user) {
+      if (user != null) {
+        return user.id;
+      }
+      return null;
+    });
+    if (id != null) {
+      _fireStore
+          .collection('cases')
+          .document(tag)
+          .collection('map_coords')
+          .add({'position': point.data, 'uid': id});
+    }
   }
 
   Stream<QuerySnapshot> getMatimelaCases() {
