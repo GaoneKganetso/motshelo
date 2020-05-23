@@ -27,13 +27,12 @@ class _MapsLocationTrackerPageState extends State<MapsLocationTrackerPage> {
   final Set<Marker> _markers = {};
   final Set<Polyline> _polyLines = {};
   Future<bool> isMapReady;
+  bool hasNoRoute = false;
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      getCowCoordinates(widget.tag);
-    });
+    Future.microtask(() => getCowCoordinates(widget.tag));
   }
 
   // ! ON CREATE
@@ -48,14 +47,14 @@ class _MapsLocationTrackerPageState extends State<MapsLocationTrackerPage> {
     super.dispose();
   }
 
-  void getCowCoordinates(String tag) async {
+  getCowCoordinates(String tag) {
     _fireStore
         .collection('cases')
         .document(tag)
         .collection('map_coords')
         .orderBy('date', descending: false)
         .snapshots()
-        .listen((snapshot) async {
+        .listen((snapshot) {
       for (var i = 0; i < snapshot.documents.length; i++) {
         var doc = snapshot.documents[i];
         GeoPoint pos = doc.data['position']['geopoint'];
@@ -64,23 +63,25 @@ class _MapsLocationTrackerPageState extends State<MapsLocationTrackerPage> {
         _addMarker(latLng, "Last Seen", doc.data['date'].toDate().toString(),
             i == snapshot.documents.length - 1 ? 0 : 1);
         if (i != 0) {
-          setState(() {
-            _destination = latLng;
-            _googleMapsServices
-                .getRouteCoordinates(_source, _destination)
-                .then((route) {
-              setState(() {
-                createRoute(route, randomString(100));
-              });
+          _destination = latLng;
+          _googleMapsServices
+              .getRouteCoordinates(_source, _destination)
+              .then((route) {
+            setState(() {
+              createRoute(route, randomString(100));
+              hasNoRoute = true;
             });
-            _source = latLng;
           });
+          _source = latLng;
         } else {
-          setState(() {
-            _source = latLng;
-            _center = latLng;
-          });
+          _source = latLng;
+          _center = latLng;
         }
+      }
+      if (!hasNoRoute) {
+        setState(() {
+          hasNoRoute = true;
+        });
       }
     });
   }
@@ -162,7 +163,13 @@ class _MapsLocationTrackerPageState extends State<MapsLocationTrackerPage> {
         ),
       ),
       body: _center == null
-          ? CupertinoActivityIndicator()
+          ? hasNoRoute
+              ? Center(
+                  child: Container(
+                    child: Text("No recorded tracks for this cow."),
+                  ),
+                )
+              : Center(child: CupertinoActivityIndicator())
           : GoogleMap(
               onMapCreated: onCreated,
               initialCameraPosition: CameraPosition(
