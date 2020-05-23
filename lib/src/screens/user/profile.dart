@@ -18,19 +18,12 @@ class UserInfo extends StatelessWidget {
         Card(
           margin: EdgeInsets.zero,
           elevation: 2.0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
+          shape: CircleBorder(),
+          color: Colors.white,
           child: Container(
             width: 80.0,
             height: 80.0,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
-              child: FadeInImage.assetNetwork(
-                placeholder: picture,
-                image: picture,
-              ),
-            ),
+            child: CircleAvatar(backgroundImage: AssetImage(picture)),
           ),
         ),
         SizedBox(
@@ -40,7 +33,10 @@ class UserInfo extends StatelessWidget {
           children: <Widget>[
             Text(
               name,
-              style: Theme.of(context).textTheme.headline.copyWith(color: Colors.black),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline
+                  .copyWith(color: Colors.black),
             ),
             SizedBox(
               width: 8.0,
@@ -67,7 +63,10 @@ class UserInfo extends StatelessWidget {
         ),
         Text(
           id,
-          style: Theme.of(context).textTheme.caption.copyWith(color: Colors.black.withOpacity(0.9)),
+          style: Theme.of(context)
+              .textTheme
+              .caption
+              .copyWith(color: Colors.black.withOpacity(0.9)),
         ),
         SizedBox(
           height: 6.0,

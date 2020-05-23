@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:matimela/src/utils/google_maps_config.dart';
@@ -55,7 +56,6 @@ class _MapsLocationTrackerPageState extends State<MapsLocationTrackerPage> {
         .orderBy('date', descending: false)
         .snapshots()
         .listen((snapshot) async {
-
       for (var i = 0; i < snapshot.documents.length; i++) {
         var doc = snapshot.documents[i];
         GeoPoint pos = doc.data['position']['geopoint'];
@@ -151,34 +151,34 @@ class _MapsLocationTrackerPageState extends State<MapsLocationTrackerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Location Tracker'),
-          backgroundColor: Colors.blue,
-          actions: <Widget>[],
-          leading: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: Icon(Icons.arrow_back_ios),
-          ),
-        ),
-        body: GoogleMap(
-          onMapCreated: onCreated,
-          initialCameraPosition: CameraPosition(
-              target: _center,
-              zoom: CAMERA_ZOOM,
-              bearing: CAMERA_BEARING,
-              tilt: CAMERA_TILT),
-          mapType: MapType.hybrid,
-          myLocationEnabled: false,
-          polylines: _polyLines,
-          markers: _markers,
-          compassEnabled: true,
-          mapToolbarEnabled: true,
-          zoomGesturesEnabled: true,
-          buildingsEnabled: true,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Location Tracker'),
+        backgroundColor: Colors.blue,
+        actions: <Widget>[],
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(Icons.arrow_back_ios),
         ),
       ),
+      body: _center == null
+          ? CupertinoActivityIndicator()
+          : GoogleMap(
+              onMapCreated: onCreated,
+              initialCameraPosition: CameraPosition(
+                  target: _center,
+                  zoom: CAMERA_ZOOM,
+                  bearing: CAMERA_BEARING,
+                  tilt: CAMERA_TILT),
+              mapType: MapType.hybrid,
+              myLocationEnabled: false,
+              polylines: _polyLines,
+              markers: _markers,
+              compassEnabled: true,
+              mapToolbarEnabled: true,
+              zoomGesturesEnabled: true,
+              buildingsEnabled: true,
+            ),
     );
   }
 }
