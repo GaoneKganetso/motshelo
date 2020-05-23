@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:matimela/main.dart';
 import 'package:matimela/src/mixins/page_view_card.dart';
 import 'package:matimela/src/mixins/square_button.dart';
 import 'package:matimela/src/mixins/tracking_lines.dart';
@@ -372,8 +373,12 @@ class _HomePageState extends State<HomePage> {
                               height: 8.0,
                             ),
                             FlatButton.icon(
-                                onPressed: () async {
-                                  await _authService.sigOut();
+                                onPressed: () {
+                                  _authService.sigOut();
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => MyApp()));
                                 },
                                 icon: Icon(Icons.person),
                                 label: Text("logout"))
