@@ -12,7 +12,7 @@ import 'package:matimela/src/utils/google_maps_config.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:rxdart/rxdart.dart';
 
-const kGoogleApiKey = "AIzaSyAQvZhDnP4hpEsi6EcGBYmp-Pq5lyJv9dE";
+const kGoogleApiKey = "AIzaSyDuyMpqQnoHePUXAdmzQbaJ8ceAUSWyM8M";
 
 class AppState with ChangeNotifier {
   AppState() {
@@ -55,23 +55,27 @@ class AppState with ChangeNotifier {
     String error;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      myLocation = (await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best));
-      try {
-        await Geolocator()
-            .placemarkFromCoordinates(myLocation.latitude, myLocation.longitude)
-            .then((placemark) {
-          _initialPosition = LatLng(myLocation.latitude, myLocation.longitude);
-          print("initial position is : ${_initialPosition.toString()}");
-          print('Place mark ' + placemark[0].name);
-          currentLocation = placemark[0].name;
-          if (currentLocation == 'Unnamed Road')
-            currentLocation = '';
-          //_addGeoPoint(myLocation);
-        });
+      myLocation = (await Geolocator()
+          .getCurrentPosition(desiredAccuracy: LocationAccuracy.best));
+      if (myLocation.latitude != null && myLocation.longitude != null) {
+        try {
+          await Geolocator()
+              .placemarkFromCoordinates(
+                  myLocation.latitude, myLocation.longitude)
+              .then((placemark) {
+            _initialPosition =
+                LatLng(myLocation.latitude, myLocation.longitude);
+            print("initial position is : ${_initialPosition.toString()}");
+            print('Place mark ' + placemark[0].name);
+            currentLocation = placemark[0].name;
+            if (currentLocation == 'Unnamed Road') currentLocation = '';
+            //_addGeoPoint(myLocation);
+          });
 
-        notifyListeners();
-      } catch (e) {
-        print(e.message.toString());
+          notifyListeners();
+        } catch (e) {
+          print(e.message.toString());
+        }
       }
     } catch (e) {
       if (e.code == 'PERMISSION_DENIED') {
@@ -86,10 +90,9 @@ class AppState with ChangeNotifier {
     return currentLocation;
   }
 
-  getLocationCoordinates(){
+  getLocationCoordinates() {
     return myLocation;
   }
-
 
   // ! TO CREATE ROUTE
   void createRoute(String encondedPoly) {

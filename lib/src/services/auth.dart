@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:matimela/src/models/user.dart';
 
 class AuthService {
@@ -47,8 +48,8 @@ class AuthService {
   //register with email & password
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result =
-          await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      AuthResult result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
       FirebaseUser firebaseUser = result.user;
       return _userFromFirebaseUser(firebaseUser);
     } on Exception catch (e) {
@@ -60,10 +61,11 @@ class AuthService {
   //sign with email & password
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      AuthResult result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
       FirebaseUser firebaseUser = result.user;
       return _userFromFirebaseUser(firebaseUser);
-    } on Exception catch (e) {
+    } on PlatformException catch (e) {
       print(e.toString());
       return null;
     }
