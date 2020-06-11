@@ -6,8 +6,7 @@ import 'package:matimela/src/services/app_state.dart';
 import 'package:matimela/src/services/auth.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(
-  MaterialApp(
+void main() => runApp(MaterialApp(
       home: MyApp(),
       debugShowCheckedModeBanner: true,
     ));

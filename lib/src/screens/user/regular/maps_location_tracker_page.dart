@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:matimela/src/utils/google_maps_config.dart';
 import 'package:random_string/random_string.dart';
+import 'dart:developer' as developer;
 
 const double CAMERA_ZOOM = 10;
 const double CAMERA_TILT = 0;
@@ -67,10 +69,22 @@ class _MapsLocationTrackerPageState extends State<MapsLocationTrackerPage> {
           _googleMapsServices
               .getRouteCoordinates(_source, _destination)
               .then((route) {
-            setState(() {
-              createRoute(route, randomString(100));
-              hasNoRoute = true;
-            });
+            // if (route['error_message'] != null) {
+            //   Fluttertoast.showToast(
+            //       msg: route['error_message'],
+            //       toastLength: Toast.LENGTH_SHORT,
+            //       gravity: ToastGravity.CENTER,
+            //       timeInSecForIosWeb: 1,
+            //       backgroundColor: Colors.red,
+            //       textColor: Colors.white,
+            //       fontSize: 16.0);
+            // }
+            if (route != null) {
+              setState(() {
+                createRoute(route, randomString(100));
+                hasNoRoute = true;
+              });
+            }
           });
           _source = latLng;
         } else {
