@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     _pageController.addListener(() {
@@ -177,10 +178,6 @@ class _HomePageState extends State<HomePage> {
                     child: PageView(
                       controller: _pageController,
                       children: <Widget>[
-                        PageViewCard(),
-                        PageViewCard(),
-                        PageViewCard(),
-                        PageViewCard(),
                         PageViewCard(),
                       ],
                     ),

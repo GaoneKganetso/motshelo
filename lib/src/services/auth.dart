@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:matimela/src/models/user.dart';
@@ -5,7 +6,7 @@ import 'package:matimela/src/models/user.dart';
 class AuthService {
   // firebase instance
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  Firestore _fireStore = Firestore.instance;
   //create user from firebase instance
   User _userFromFirebaseUser(FirebaseUser firebaseUser) {
     return firebaseUser != null
@@ -46,12 +47,20 @@ class AuthService {
   }
 
   //register with email & password
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future registerWithEmailAndPassword(String email, String password,  String name, String surname,String brandName, String location) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser firebaseUser = result.user;
-      return _userFromFirebaseUser(firebaseUser);
+      User user = _userFromFirebaseUser(firebaseUser);
+      Map<String,dynamic>data = {
+        'brandName': brandName,
+        'surname':surname,
+        'name':name,
+        'location': location,
+      };
+      _fireStore.collection('profile').document(user.id).setData(data);
+      return user;
     } on Exception catch (e) {
       print(e.toString());
       return null;

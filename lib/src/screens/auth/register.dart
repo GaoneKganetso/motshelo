@@ -9,10 +9,14 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> with TickerProviderStateMixin {
-  String _email, _username, _phoneNumber, _password = '';
+  String _email, _username, _phoneNumber,_surname, _name, _brandName, _location, _password = '';
   final _formKey = GlobalKey<FormState>();
   final _phonePattern = RegExp(r"^7[1-7]{1}[0-9]{6}$");
   final _alphanumeric = RegExp(r'^[a-zA-Z0-9]+$');
+  final _surnamePattern = RegExp(r'^[a-zA-Z0-9]+$');
+  final _namePattern = RegExp(r'^[a-zA-Z0-9]+$');
+  final _locationPattern = RegExp(r'^[a-zA-Z0-9]+$');
+  final _brandNamePattern = RegExp(r'^[a-zA-Z0-9]{4}$');
   final _emailPattern = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\"
       r".[a-zA-Z]+");
   final _auth = AuthService();
@@ -119,6 +123,98 @@ class _RegisterState extends State<Register> with TickerProviderStateMixin {
                               SizedBox(
                                 height: ScreenUtil.getInstance().setHeight(30),
                               ),
+                              Text('Name',
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins-Medium',
+                                      fontSize: ScreenUtil.getInstance().setSp(26),
+                                      color: Colors.white)),
+                              TextFormField(
+                                style: TextStyle(color: Colors.white),
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                    hintText: 'name',
+                                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+                                onChanged: (val) => setState(() => this._name = val),
+                                validator: (value) {
+                                  return value.isEmpty
+                                      ? 'Enter an Name'
+                                      : !_namePattern.hasMatch(value)
+                                      ? 'Enter a valid Name'
+                                      : null;
+                                },
+                              ),
+                              SizedBox(
+                                height: ScreenUtil.getInstance().setHeight(30),
+                              ),
+                              Text('Surname',
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins-Medium',
+                                      fontSize: ScreenUtil.getInstance().setSp(26),
+                                      color: Colors.white)),
+                              TextFormField(
+                                style: TextStyle(color: Colors.white),
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                    hintText: 'surname',
+                                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+                                onChanged: (val) => setState(() => this._surname = val),
+                                validator: (value) {
+                                  return value.isEmpty
+                                      ? 'Enter an Surname'
+                                      : !_surnamePattern.hasMatch(value)
+                                      ? 'Enter a valid Surname'
+                                      : null;
+                                },
+                              ),
+                              SizedBox(
+                                height: ScreenUtil.getInstance().setHeight(30),
+                              ),
+                              Text('BrandName',
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins-Medium',
+                                      fontSize: ScreenUtil.getInstance().setSp(26),
+                                      color: Colors.white)),
+                              TextFormField(
+                                style: TextStyle(color: Colors.white),
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                    hintText: 'brandname',
+                                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+                                onChanged: (val) => setState(() => this._brandName = val),
+                                validator: (value) {
+                                  return value.isEmpty
+                                      ? 'Enter an brandName'
+                                      : !_brandNamePattern.hasMatch(value)
+                                      ? 'Enter a valid brandName'
+                                      : null;
+                                },
+                              ),
+                              SizedBox(
+                                height: ScreenUtil.getInstance().setHeight(30),
+                              ),
+                              Text('Location',
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins-Medium',
+                                      fontSize: ScreenUtil.getInstance().setSp(26),
+                                      color: Colors.white)),
+                              TextFormField(
+                                style: TextStyle(color: Colors.white),
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                    hintText: 'location',
+                                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+                                onChanged: (val) => setState(() => this._location = val),
+                                validator: (value) {
+                                  return value.isEmpty
+                                      ? 'Enter an brandName'
+                                      : !_locationPattern.hasMatch(value)
+                                      ? 'Enter a valid brandName'
+                                      : null;
+                                },
+                              ),
+                              SizedBox(
+                                height: ScreenUtil.getInstance().setHeight(30),
+                              ),
 //                              Text('Contact',
 //                                  style: TextStyle(
 //                                      fontFamily: 'Poppins-Medium',
@@ -219,7 +315,7 @@ class _RegisterState extends State<Register> with TickerProviderStateMixin {
                                                     });
                                                     dynamic result =
                                                         await _auth.registerWithEmailAndPassword(
-                                                            _email, _password);
+                                                            _email, _password, _surname, _brandName, _name,_location);
 
                                                     if (result == null) {
                                                       setState(() {
