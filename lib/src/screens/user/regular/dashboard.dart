@@ -6,10 +6,9 @@ import 'package:matimela/main.dart';
 import 'package:matimela/src/mixins/page_view_card.dart';
 import 'package:matimela/src/mixins/square_button.dart';
 import 'package:matimela/src/mixins/tracking_lines.dart';
-import 'package:matimela/src/mixins/wrapper.dart';
-import 'package:matimela/src/screens/auth/login.dart';
 import 'package:matimela/src/screens/user/profile.dart';
 import 'package:matimela/src/screens/user/regular/kraal_dashboard.dart';
+import 'package:matimela/src/screens/user/regular/notifications.dart';
 import 'package:matimela/src/screens/user/regular/search_dashboard.dart';
 import 'package:matimela/src/services/auth.dart';
 
@@ -29,9 +28,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     _pageController.addListener(() {
       setState(() => _currentIndex = _pageController.page.round());
     });
@@ -88,40 +85,32 @@ class _HomePageState extends State<HomePage> {
                           icon: Icon(FontAwesomeIcons.search),
                           label: 'Cases',
                           action: () {
-                            Navigator.push(
-                                context,
-                                new MaterialPageRoute(
-                                    builder: (context) => SearchAnimal()));
+                            Navigator.push(context,
+                                new MaterialPageRoute(builder: (context) => SearchAnimal()));
                           },
                         ),
                         SquareButton(
                           icon: Icon(FontAwesomeIcons.horse),
                           label: 'My Kraal',
                           action: () {
-                            Navigator.push(
-                                context,
-                                new MaterialPageRoute(
-                                    builder: (context) => MyKraalPage()));
+                            Navigator.push(context,
+                                new MaterialPageRoute(builder: (context) => MyKraalPage()));
                           },
                         ),
                         SquareButton(
                           icon: Icon(FontAwesomeIcons.userFriends),
                           label: 'Farmers',
                           action: () {
-                            Navigator.push(
-                                context,
-                                new MaterialPageRoute(
-                                    builder: (context) => SearchAnimal()));
+                            Navigator.push(context,
+                                new MaterialPageRoute(builder: (context) => SearchAnimal()));
                           },
                         ),
                         SquareButton(
                           icon: Icon(FontAwesomeIcons.comments),
                           label: 'Notifications',
                           action: () {
-                            Navigator.push(
-                                context,
-                                new MaterialPageRoute(
-                                    builder: (context) => SearchAnimal()));
+                            Navigator.push(context,
+                                new MaterialPageRoute(builder: (context) => MyNotifications()));
                           },
                         ),
                       ],
@@ -145,10 +134,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Text(
                             'News Feed',
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle
-                                .copyWith(color: Colors.black),
+                            style:
+                                Theme.of(context).textTheme.subtitle.copyWith(color: Colors.black),
                           ),
                           Expanded(
                             child: SizedBox(),
@@ -224,8 +211,7 @@ class _HomePageState extends State<HomePage> {
                               child: Icon(
                                 IconData(0xF391,
                                     fontFamily: CupertinoIcons.iconFont,
-                                    fontPackage:
-                                        CupertinoIcons.iconFontPackage),
+                                    fontPackage: CupertinoIcons.iconFontPackage),
                                 color: Colors.white,
                               ),
                             ),
@@ -240,17 +226,14 @@ class _HomePageState extends State<HomePage> {
                               style: Theme.of(context)
                                   .textTheme
                                   .headline
-                                  .copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
+                                  .copyWith(fontWeight: FontWeight.w500, color: Colors.white),
                             ),
                             Text(
                               'My Reports',
                               style: Theme.of(context)
                                   .textTheme
                                   .caption
-                                  .copyWith(
-                                      color: Colors.white.withOpacity(0.5)),
+                                  .copyWith(color: Colors.white.withOpacity(0.5)),
                             ),
                           ],
                         ),
@@ -280,9 +263,7 @@ class _HomePageState extends State<HomePage> {
             curve: Curves.easeIn,
             top: 0.0,
             bottom: 0.0,
-            left: _isDrawerOpen
-                ? 0.0
-                : -(MediaQuery.of(context).size.width / 3) * 2,
+            left: _isDrawerOpen ? 0.0 : -(MediaQuery.of(context).size.width / 3) * 2,
             child: Container(
               width: (MediaQuery.of(context).size.width / 3) * 2,
               height: double.infinity,
@@ -320,8 +301,7 @@ class _HomePageState extends State<HomePage> {
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 46.0, bottom: 46.0),
+                            padding: const EdgeInsets.only(left: 46.0, bottom: 46.0),
                             child: UserInfo(
                                 picture: 'assets/image/profile/userdefault.png',
                                 name: 'Tiro',
@@ -373,9 +353,7 @@ class _HomePageState extends State<HomePage> {
                                 onPressed: () {
                                   _authService.sigOut();
                                   Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => MyApp()));
+                                      context, MaterialPageRoute(builder: (_) => MyApp()));
                                 },
                                 icon: Icon(Icons.person),
                                 label: Text("logout"))
