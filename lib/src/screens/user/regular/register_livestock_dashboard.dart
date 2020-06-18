@@ -1,9 +1,13 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:matimela/src/models/user.dart';
+import 'package:matimela/src/services/auth.dart';
 import 'package:matimela/src/services/my_livestock.dart';
 import 'package:toast/toast.dart';
 
@@ -19,6 +23,9 @@ class _RegisterLivestockState extends State<RegisterLivestock> with TickerProvid
   bool isReplay = false;
   String _brand, _color, _location, _tagNumber = "";
   File file;
+  AuthService _authService = new AuthService();
+  Firestore _firestore = Firestore();
+  User user;
 
   Future _choose() async {
     await ImagePicker.pickImage(source: ImageSource.gallery).then((temp) {
@@ -55,35 +62,53 @@ class _RegisterLivestockState extends State<RegisterLivestock> with TickerProvid
             SizedBox(
               height: ScreenUtil.getInstance().setHeight(30),
             ),
-
             Form(
                 key: _formKey,
                 child: Column(
                   children: <Widget>[
-                    TextFormField(
-                      decoration: new InputDecoration(
-                        prefixIcon: Icon(Icons.device_hub),
-                        labelText: "Enter Brand",
-                        fillColor: Colors.white,
-                        border: new OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(25.0),
-                          borderSide: new BorderSide(),
-                        ),
-                        //fillColor: Colors.green
-                      ),
-                      validator: (val) {
-                        if (val.length == 0) {
-                          return "Brand cannot be empty";
-                        } else {
-                          return null;
-                        }
-                      },
-                      onChanged: (val) => setState(() => this._brand = val),
-                      keyboardType: TextInputType.emailAddress,
-                      style: new TextStyle(
-                        fontFamily: "Poppins",
-                      ),
-                    ),
+                    FutureBuilder(
+                        future: _authService.currentUser(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Center(child: CupertinoActivityIndicator());
+                          }
+
+                          User user = snapshot.data;
+                          return StreamBuilder(
+                              stream:
+                                  _firestore.collection('profile').document(user.id).snapshots(),
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData) {
+                                  return Center(child: CupertinoActivityIndicator());
+                                }
+                                Profile profile = Profile.fromJson(snapshot.data);
+                                return TextFormField(
+                                  initialValue: profile.brandName,
+                                  decoration: new InputDecoration(
+                                    prefixIcon: Icon(Icons.device_hub),
+                                    labelText: "Enter Brand",
+                                    fillColor: Colors.white,
+                                    border: new OutlineInputBorder(
+                                      borderRadius: new BorderRadius.circular(25.0),
+                                      borderSide: new BorderSide(),
+                                    ),
+                                    //fillColor: Colors.green
+                                  ),
+                                  validator: (val) {
+                                    if (val.length == 0) {
+                                      return "Brand cannot be empty";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  onChanged: (val) => setState(() => this._brand = val),
+                                  keyboardType: TextInputType.emailAddress,
+                                  style: new TextStyle(
+                                    fontFamily: "Poppins",
+                                  ),
+                                );
+                              });
+                        }),
                     SizedBox(
                       height: ScreenUtil.getInstance().setHeight(30),
                     ),

@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:matimela/src/models/case.dart';
 import 'package:matimela/src/screens/user/regular/maps_location_tracker_page.dart';
-import 'package:matimela/src/screens/user/regular/report_dashboard.dart';
 import 'package:matimela/src/services/auth.dart';
 import 'package:matimela/src/services/report.dart';
 import 'package:matimela/src/utils/constants.dart';
@@ -42,16 +41,6 @@ class _NotificationState extends State<MyNotifications> {
             ),
           ),
           backgroundColor: Colors.grey[700],
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(
-                  Icons.add_circle_outline,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                onPressed: () => Navigator.push(
-                    context, new MaterialPageRoute(builder: (context) => ReportMatimela())))
-          ],
         ),
         body: Stack(
           fit: StackFit.loose,
