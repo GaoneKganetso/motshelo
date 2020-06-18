@@ -8,7 +8,7 @@ import 'package:matimela/src/services/auth.dart';
 
 import 'page_view_card_list_tile.dart';
 
-class PageViewCard extends StatelessWidget{
+class PageViewCard extends StatelessWidget {
   Firestore _firestore = Firestore();
   AuthService _authService = new AuthService();
   User user;
@@ -18,7 +18,7 @@ class PageViewCard extends StatelessWidget{
     return FutureBuilder(
         future: _authService.currentUser(),
         builder: (context, snapshot) {
-          if(!snapshot.hasData){
+          if (!snapshot.hasData) {
             return Center(child: CupertinoActivityIndicator());
           }
 
@@ -26,7 +26,7 @@ class PageViewCard extends StatelessWidget{
           return StreamBuilder(
               stream: _firestore.collection('profile').document(user.id).snapshots(),
               builder: (context, snapshot) {
-                if(!snapshot.hasData){
+                if (!snapshot.hasData) {
                   return Center(child: CupertinoActivityIndicator());
                 }
                 log(snapshot.data.toString());
@@ -70,8 +70,7 @@ class PageViewCard extends StatelessWidget{
                                 children: <Widget>[
                                   Text(
                                     'click for more details',
-                                    style: TextStyle(color: Colors.black,
-                                        fontFamily: 'Quicksand'),
+                                    style: TextStyle(color: Colors.black, fontFamily: 'Quicksand'),
                                   ),
                                   Expanded(child: SizedBox()),
                                   RotatedBox(
@@ -92,10 +91,7 @@ class PageViewCard extends StatelessWidget{
                     ),
                   ),
                 );
-              }
-          );
-        }
-    );
+              });
+        });
   }
-
 }

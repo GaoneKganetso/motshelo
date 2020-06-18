@@ -47,16 +47,17 @@ class AuthService {
   }
 
   //register with email & password
-  Future registerWithEmailAndPassword(String email, String password,  String name, String surname,String brandName, String location) async {
+  Future registerWithEmailAndPassword(String email, String password, String surname,
+      String brandName, String name, String location) async {
     try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      AuthResult result =
+          await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser firebaseUser = result.user;
       User user = _userFromFirebaseUser(firebaseUser);
-      Map<String,dynamic>data = {
+      Map<String, dynamic> data = {
         'brandName': brandName,
-        'surname':surname,
-        'name':name,
+        'surname': surname,
+        'name': name,
         'location': location,
       };
       _fireStore.collection('profile').document(user.id).setData(data);
@@ -70,8 +71,7 @@ class AuthService {
   //sign with email & password
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
+      AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       FirebaseUser firebaseUser = result.user;
       return _userFromFirebaseUser(firebaseUser);
     } on PlatformException catch (e) {
