@@ -3,7 +3,6 @@ class Animal {
   String _color;
   String _created;
   String _picture;
-  String _owner;
   String _tag;
 
   Animal(String brand, String color, String picture, String tag) {
@@ -20,7 +19,6 @@ class Animal {
   // ignore: unnecessary_getters_setters
   String get created => _created;
   String get picture => _picture;
-  String get owner => _owner;
   String get color => _color;
   String get tag => _tag;
   String get brand => _brand;
@@ -44,10 +42,9 @@ class Animal {
     _picture = value;
   }
 
-  // ignore: unnecessary_getters_setters
-  set owner(String value) {
-    _owner = value;
-  }
 
-  set tag(String value) => _tag = value;
+
+  set tag(String value) {
+    _tag = value;
+  }
 }

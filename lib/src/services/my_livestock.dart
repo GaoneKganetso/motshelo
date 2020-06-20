@@ -10,7 +10,7 @@ class LivestockManager {
   AuthService _authService = new AuthService();
 
   Future<void> registerLivestock(
-      String brand, String color, File file, String location, String tag) async {
+      String brand, String color, File file, String tag) async {
     StorageReference storageReference =
         FirebaseStorage.instance.ref().child('livestock/${Path.basename(file.path)}');
     StorageUploadTask uploadTask = storageReference.putFile(file);
@@ -23,7 +23,6 @@ class LivestockManager {
         var data = {
           'brand': brand,
           'color': color,
-          'location': location,
           'tag': tag,
           'photo': fileURL,
           'owner': user.id.toString()

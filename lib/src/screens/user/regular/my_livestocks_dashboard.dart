@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -71,7 +72,8 @@ class _MyLivestockState extends State<MyLivestock> {
 
         List<DocumentSnapshot> docs = snapshot.data.documents;
         docs.forEach((doc) {
-          cases.add(AnimalCase("", doc.data['date'], doc.data['owner'], doc.data['brand'],doc.data['color'], doc.data['photo'], doc.data['tag']));
+          log('tag is ${doc.data['tag']}');
+          cases.add(AnimalCase("", doc.data['date'], doc.data['owner'], doc.data['brand'],doc.data['color'], doc.data['tag'], doc.data['photo']));
         });
         return animalListComponent(cases);
       },
@@ -186,28 +188,8 @@ class _MyLivestockState extends State<MyLivestock> {
                     SizedBox(
                       height: 5,
                     ),
-                    Text(
-                      "Location: ${animal.tag ?? 'None'}",
-                      style: TextStyle(
-                        color: Color(0xff8C68EC),
-                        fontFamily: 'Quicksand',
-                        fontSize: 12,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      "Owner: ${animal.lastSeen ?? 'None'} ",
-                      style: TextStyle(
-                        color: Color(0xff8C68EC),
-                        fontFamily: 'Quicksand',
-                        fontSize: 12,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 5),
-                    ),
+
+
                   ],
                 ),
               ),

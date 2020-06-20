@@ -16,7 +16,7 @@ class _RegisterState extends State<Register> with TickerProviderStateMixin {
   final _surnamePattern = RegExp(r'^[a-zA-Z0-9]+$');
   final _namePattern = RegExp(r'^[a-zA-Z0-9]+$');
   final _locationPattern = RegExp(r'^[a-zA-Z0-9]+$');
-  final _brandNamePattern = RegExp(r'^[a-zA-Z0-9]{4}$');
+  final _brandNamePattern = RegExp(r'^[a-zA-Z0-9]{3,}$');
   final _emailPattern = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\"
       r".[a-zA-Z]+");
   final _auth = AuthService();

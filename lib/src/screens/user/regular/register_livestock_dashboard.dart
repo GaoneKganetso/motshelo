@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,11 +22,12 @@ class _RegisterLivestockState extends State<RegisterLivestock> with TickerProvid
   LivestockManager _livestockManager = LivestockManager();
   bool loading = false;
   bool isReplay = false;
-  String _brand, _color, _location, _tagNumber = "";
+  String _brand, _color, _tagNumber = "";
   File file;
   AuthService _authService = new AuthService();
   Firestore _firestore = Firestore();
   User user;
+
 
   Future _choose() async {
     await ImagePicker.pickImage(source: ImageSource.gallery).then((temp) {
@@ -82,6 +84,7 @@ class _RegisterLivestockState extends State<RegisterLivestock> with TickerProvid
                                   return Center(child: CupertinoActivityIndicator());
                                 }
                                 Profile profile = Profile.fromJson(snapshot.data);
+                                _brand = profile.brandName;
                                 return TextFormField(
                                   initialValue: profile.brandName,
                                   decoration: new InputDecoration(
@@ -131,33 +134,6 @@ class _RegisterLivestockState extends State<RegisterLivestock> with TickerProvid
                         }
                       },
                       onChanged: (val) => setState(() => this._color = val),
-                      keyboardType: TextInputType.emailAddress,
-                      style: new TextStyle(
-                        fontFamily: "Poppins",
-                      ),
-                    ),
-                    SizedBox(
-                      height: ScreenUtil.getInstance().setHeight(30),
-                    ),
-                    TextFormField(
-                      decoration: new InputDecoration(
-                        labelText: "Enter Location",
-                        prefixIcon: Icon(Icons.location_on),
-                        fillColor: Colors.white,
-                        border: new OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(25.0),
-                          borderSide: new BorderSide(),
-                        ),
-                        //fillColor: Colors.green
-                      ),
-                      validator: (val) {
-                        if (val.length == 0) {
-                          return "Location cannot be empty";
-                        } else {
-                          return null;
-                        }
-                      },
-                      onChanged: (val) => setState(() => this._location = val),
                       keyboardType: TextInputType.emailAddress,
                       style: new TextStyle(
                         fontFamily: "Poppins",
@@ -232,17 +208,23 @@ class _RegisterLivestockState extends State<RegisterLivestock> with TickerProvid
                             loading = true;
                           });
 
-                          if (file != null)
+                          if (file != null){
+                            log(_tagNumber);
                             _livestockManager
-                                .registerLivestock(_brand, _color, file, _location, _tagNumber)
+                                .registerLivestock(
+                                _brand, _color, file, _tagNumber)
                                 .whenComplete(() {
                               setState(() {
                                 loading = false;
                                 _formKey.currentState.reset();
                               });
-                              Toast.show("Successfully registered livestock.", context,
-                                  duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+                              Toast.show("Successfully registered livestock.",
+                                  context,
+                                  duration: Toast.LENGTH_SHORT,
+                                  gravity: Toast.BOTTOM);
                             });
+                          }
+
                         }
                       },
                       child: Text(

@@ -8,6 +8,7 @@ class AnimalCase extends Animal {
     this.description = description;
     this.lastSeen = date != null ? date.toDate().toString() : '';
     this.reporter = reporter;
+    this.tag = tag;
   }
 
   String created;
